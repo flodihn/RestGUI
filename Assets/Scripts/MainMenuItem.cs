@@ -4,28 +4,45 @@ using UnityEngine;
 
 public class MainMenuItem : MonoBehaviour
 {
+	public enum ActionMethod {
+		GET,
+		POST,
+		PUT
+	};
+	public string actionUrl;
+	public ActionMethod method;
     public Color textHighLightColor = Color.green;
     private BoxCollider thisBoxCollider;
     private SpriteRenderer mainMenuSpriteRenderer;
     private TextMesh[] thisTextMeshes;
     private List<Color> TextMeshOrigColor = new List<Color>();
+	private MainMenu mainMenu;
 
     public void Start()
     {
         mainMenuSpriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+		mainMenu = transform.parent.GetComponent<MainMenu> ();
 
         AddAndFitBoxCollider();
         FindAndSetupTextMeshes();
     }
 
+	public void OnMouseDown() {
+		Debug.Log (method.ToString() + " " + actionUrl);
+		// do post action here.
+		mainMenu.HideMainMenu();
+	}
+
     public void OnMouseEnter()
     {
         HighLight();
+		mainMenu.MouseOverChildItem = true;
     }
 
     public void OnMouseExit()
     {
         UnHighLight();
+		mainMenu.MouseOverChildItem = false;
     }
 
     private void AddAndFitBoxCollider()
@@ -50,7 +67,7 @@ public class MainMenuItem : MonoBehaviour
         }
     }
 
-    private void UnHighLight()
+    public void UnHighLight()
     {
         int index = 0;
         foreach(TextMesh textMesh in thisTextMeshes) {

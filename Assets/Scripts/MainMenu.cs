@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour {
-    private float height;
+	public bool MouseOverChildItem = false;
 
+	private float height;
     private SpriteRenderer thisSpriteRenderer;
+	private bool mouseOverMainMenu = false;
+	private MainMenuItem[] items;
 
     public void Start()
     {
+		items = GetComponentsInChildren<MainMenuItem>();
         thisSpriteRenderer = GetComponent<SpriteRenderer>();
         BoxCollider collider = GetComponent<BoxCollider>();
         height = thisSpriteRenderer.size.y;
@@ -18,8 +22,17 @@ public class MainMenu : MonoBehaviour {
         ArrangeItems();
     }
 
+	public void LateUpdate() {
+		if (mouseOverMainMenu)
+			return;
+		if (MouseOverChildItem)
+			return;
+		HideMainMenu();
+	}
+
     public void ShowMainMenu()
     {
+		mouseOverMainMenu = true;
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         position.z = 1;
         transform.position = position;
@@ -30,6 +43,11 @@ public class MainMenu : MonoBehaviour {
     public void HideMainMenu()
     {
         gameObject.SetActive(false);
+		if(items != null) {
+			foreach(MainMenuItem item in items) {
+				item.UnHighLight();
+			}
+		}
     }
 
     private void ArrangeItems()
@@ -41,12 +59,14 @@ public class MainMenu : MonoBehaviour {
         }
     }
 
-    /*
+	public void OnMouseOver() {
+		mouseOverMainMenu = true;
+	}
+
     public void OnMouseExit()
     {
-        HideMainMenu();
+		mouseOverMainMenu = false;
     }
-    */
 
     private void SetSortOrder()
     {
