@@ -10,8 +10,11 @@ public class MainMenu : MonoBehaviour {
 	private bool mouseOverMainMenu = false;
 	private MainMenuItem[] items;
 
+    private Camera topMenuCamera;
+
     public void Start()
     {
+        topMenuCamera = GameObject.FindGameObjectWithTag("TopMenuCamera").GetComponent<Camera>();
 		items = GetComponentsInChildren<MainMenuItem>();
         thisSpriteRenderer = GetComponent<SpriteRenderer>();
         BoxCollider collider = GetComponent<BoxCollider>();
@@ -60,6 +63,13 @@ public class MainMenu : MonoBehaviour {
     }
 
 	public void OnMouseOver() {
+        RaycastHit hit;
+        Ray ray = topMenuCamera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, 1000f, LayerMask.NameToLayer("TopMenu")))
+        {
+            Debug.Log("Hitting: " + hit.collider.gameObject.name);
+        }
 		mouseOverMainMenu = true;
 	}
 
