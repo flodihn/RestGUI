@@ -2,7 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AppMode {
-    public LocalizedString[] modeName;
-    public string url;
+namespace AppSystem.Models
+{
+
+    public class AppMode
+    {
+        public LocalizedString[] modeName;
+        public string mode;
+        public string buttonPrefab;
+    }
 }
+

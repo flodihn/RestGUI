@@ -14,22 +14,23 @@ public class MainMenuItem : MonoBehaviour
     public Color textHighLightColor = Color.green;
     private BoxCollider thisBoxCollider;
     private SpriteRenderer mainMenuSpriteRenderer;
-    private TextMesh[] thisTextMeshes;
-    private List<Color> TextMeshOrigColor = new List<Color>();
+    private TextMesh thisTextMesh;
+    private Color TextMeshOrigColor;
 	private MainMenu mainMenu;
 
-    public void Start()
+    public void SetText(string text)
     {
         mainMenuSpriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
-		mainMenu = transform.parent.GetComponent<MainMenu> ();
+        mainMenu = transform.parent.GetComponent<MainMenu>();
+        thisTextMesh = GetComponentInChildren<TextMesh>();
 
+        thisTextMesh.text = text;
         AddAndFitBoxCollider();
         FindAndSetupTextMeshes();
     }
 
 	public void OnMouseDown() {
-		Debug.Log (method.ToString() + " " + actionUrl);
-		// do post action here.
+        Debug.Log(method.ToString() + " " + actionUrl);
 		mainMenu.HideMainMenu();
 	}
 
@@ -54,25 +55,16 @@ public class MainMenuItem : MonoBehaviour
 
     private void FindAndSetupTextMeshes()
     {
-        thisTextMeshes = gameObject.GetComponentsInChildren<TextMesh>();
-        foreach(TextMesh textMesh in thisTextMeshes) {
-            TextMeshOrigColor.Add(textMesh.color);
-        }
+        TextMeshOrigColor = thisTextMesh.color;
     }
 
     private void HighLight()
     {
-        foreach(TextMesh textMesh in thisTextMeshes) {
-            textMesh.color = textHighLightColor;
-        }
+        thisTextMesh.color = textHighLightColor;
     }
 
     public void UnHighLight()
     {
-        int index = 0;
-        foreach(TextMesh textMesh in thisTextMeshes) {
-            textMesh.color = TextMeshOrigColor[index];
-            index++;
-        }
+        thisTextMesh.color = TextMeshOrigColor;
     }
 }

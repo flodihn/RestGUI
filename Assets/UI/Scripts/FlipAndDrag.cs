@@ -93,9 +93,6 @@ public class FlipAndDrag : MonoBehaviour
             return;
         }
 
-        float h = Input.GetAxis("Mouse X");
-        float v = Input.GetAxis("Mouse Y");
-
         Vector3 screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
         screenPoint.z = transform.position.z - Camera.main.transform.position.z;
         screenPoint = Camera.main.ScreenToWorldPoint(screenPoint);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenuTrigger : MonoBehaviour {
-    public MainMenu mainMenu;
+    private  MainMenu mainMenu;
 
     public void Start()
     {
@@ -16,7 +16,7 @@ public class MainMenuTrigger : MonoBehaviour {
         RaycastHit hitInfo;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if(Physics.Raycast(ray, out hitInfo, 100f, LayerMask.GetMask("Default"), QueryTriggerInteraction.Collide)) {
+        if(Physics.Raycast(ray, out hitInfo, 100f, LayerMask.GetMask("Background"), QueryTriggerInteraction.Collide)) {
             if(hitInfo.transform == transform) {
                 mainMenu.ShowMainMenu();
             }
